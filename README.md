@@ -1,5 +1,6 @@
 *Requisitos*
-Requisitos funcionais
+*Requisitos funcionais*
+
 • 	Cadastro de usuários: Criar, editar, desativar e listar usuários (aluno, professor, bibliotecário).
 • 	Autenticação e perfis: Login e controle de acesso por perfil (usuário vs. bibliotecário).
 • 	Catálogo de livros: Cadastrar, editar, desativar, listar e buscar livros por título, autor, assunto e ISBN.
@@ -10,7 +11,9 @@ Requisitos funcionais
 • 	Notificações: Alertas de vencimento, disponibilidade de reserva e multas pendentes (simulado).
 • 	Relatórios: Empréstimos ativos, atrasos, histórico por usuário, livros mais emprestados.
 • 	Administração: Gerenciar exemplares, categorias/assuntos, políticas (prazos, multas).
-Requisitos não funcionais
+
+*Requisitos não funcionais*
+
 • 	Usabilidade: Interface clara, busca acessível e feedback imediato.
 • 	Segurança: Perfis e regras de acesso; registro de operações críticas.
 • 	Desempenho: Busca no catálogo em tempo razoável (milhares de itens).
@@ -18,12 +21,16 @@ Requisitos não funcionais
 • 	Escalabilidade: Estrutura preparada para futura persistência em SGBD.
 • 	Mantenabilidade: Código modular, testes automatizados e documentação clara.
 
-Casos de uso
-Atores
+*Casos de uso*
+
+*Atores*
+
 • 	Usuário: Aluno/Professor que consulta catálogo, reserva, empresta, renova e devolve.
 • 	Bibliotecário: Administra catálogo, usuários, regras, autoriza operações e gera relatórios.
 • 	Sistema de notificação: Serviço interno que dispara lembretes (simulado).
-Diagrama de casos de uso (descrição textual)
+
+*Diagrama de casos de uso (descrição textual)*
+
 • 	Usuário
 • 	UC1: Buscar livros
 • 	UC2: Visualizar detalhes de livro
@@ -42,14 +49,18 @@ Diagrama de casos de uso (descrição textual)
 • 	UC13: Notificar vencimento
 • 	UC14: Notificar disponibilidade de reserva
 • 	UC15: Notificar multa aplicada
-Especificações resumidas
+
+*Especificações resumidas*
+
 • 	UC1 — Buscar livros: Entrada por texto/filtros; saída lista de resultados; regra: busca parcial por título/autor/assunto/ISBN.
 • 	UC4 — Solicitar empréstimo: Pré-condição: usuário ativo, sem bloqueio; pós-condição: empréstimo criado e exemplar decrementado; exceções: sem disponibilidade, multas pendentes.
 • 	UC5 — Renovar: Pré: empréstimo ativo; regra: sem reservas pendentes; limite de renovações; saída: nova data de devolução.
 • 	UC3 — Reservar: Pré: sem exemplares disponíveis; saída: posição na fila; regra: expiração de reserva quando exemplar disponível e não atendido em X horas.
 
-Diagramas de atividades
-Fluxo de empréstimo
+*Diagramas de atividades*
+
+*Fluxo de empréstimo*
+
 • 	Início: Usuário solicita empréstimo.
 • 	Verificações:
 • 	Perfil e status: usuário ativo? sem bloqueios/multas?
@@ -59,21 +70,27 @@ Fluxo de empréstimo
 • 	Se disponível: registrar empréstimo.
 • 	Processo: calcular data de devolução conforme política; decrementar estoque; registrar log.
 • 	Saída: confirmação e notificação.
-Fluxo de devolução
+
+*Fluxo de devolução*
+
 • 	Início: Usuário devolve exemplar.
 • 	Processo: localizar empréstimo, calcular atraso, aplicar multa se necessário.
 • 	Atualização: incrementar estoque; fechar empréstimo; atualizar status de multa.
 • 	Gatilho: se há reserva pendente, notificar próximo da fila.
 • 	Saída: recibo e estado atualizado.
-Fluxo de reserva
+
+*Fluxo de reserva*
+
 • 	Início: Usuário solicita reserva de livro indisponível.
 • 	Processo: inserir na fila do livro com timestamp.
 • 	Gatilho: quando exemplar retorna, notificar primeiro da fila e abrir janela de retirada.
 • 	Decisão: se reserva expira, avançar para próximo da fila.
 • 	Saída: confirmação de posição e prazo.
 
-Modelo entidade-relacionamento
-Entidades e atributos
+*Modelo entidade-relacionamento*
+
+*Entidades e atributos*
+
 • 	Usuário (Usuario)
 • 	idUsuario: identificador
 • 	nome: texto
@@ -111,7 +128,9 @@ Entidades e atributos
 • 	prazoDias: inteiro
 • 	multaPorDia: valor
 • 	limiteRenovacoes: inteiro
-Relacionamentos e cardinalidades
+
+*Relacionamentos e cardinalidades*
+
 • 	Usuario 1..N Emprestimo: um usuário pode ter muitos empréstimos; cada empréstimo pertence a um usuário.
 • 	Livro 1..N Emprestimo: um livro pode estar em muitos empréstimos ao longo do tempo.
 • 	Usuario 1..N Reserva: um usuário pode ter muitas reservas.
